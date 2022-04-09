@@ -1,6 +1,41 @@
 {% extends "base.html" %}
 
 {% block content %}
+<div class="all">
+    <input checked type="radio" name="respond" id="desktop">
+    <article id="slider">
+        <input checked type="radio" name="slider" id="switch1">
+        <input type="radio" name="slider" id="switch2">
+        <input type="radio" name="slider" id="switch3">
+        <input type="radio" name="slider" id="switch4">
+        <input type="radio" name="slider" id="switch5">
+        <div id="slides">
+            <div id="overflow">
+                <div class="image">
+                    <article><img src="/static/img/1.jpg"></article>
+                    <article><img src="/static/img/2.jpg"></article>
+                    <article><img src="/static/img/3.jpg"></article>
+                    <article><img src="/static/img/4.jpg"></article>
+                    <article><img src="/static/img/5.jpg"></article>
+                </div>
+            </div>
+        </div>
+        <div id="controls">
+            <label for="switch1"></label>
+            <label for="switch2"></label>
+            <label for="switch3"></label>
+            <label for="switch4"></label>
+            <label for="switch5"></label>
+        </div>
+        <div id="active">
+            <label for="switch1"></label>
+            <label for="switch2"></label>
+            <label for="switch3"></label>
+            <label for="switch4"></label>
+            <label for="switch5"></label>
+        </div>
+    </article>
+</div>
 <h1>Записи в блоге</h1>
 {% if current_user.is_authenticated %}
     <a href="games" class="btn btn-secondary">Добавить новость</a>
