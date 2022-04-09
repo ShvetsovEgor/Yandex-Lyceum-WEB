@@ -154,6 +154,11 @@ def games_delete(id):
     return redirect('/')
 
 
+def Redirect_to_game(location):
+    print(111111111)
+    # return redirect(location, code=302, Response=None)
+
+
 def main():
     db_session.global_init("db/digitalmarket.db")
     app.run()
