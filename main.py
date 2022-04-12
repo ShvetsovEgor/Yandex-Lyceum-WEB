@@ -41,6 +41,17 @@ def index():
     return render_template("index.html", games=games)
 
 
+@app.route("/games/<name>")
+def game(name):
+    db_sess = db_session.create_session()
+    a = db_sess.query(Games).filter(Games.title == name).all()
+    a = list(a)
+    print(a)
+    print(a[0].genre)
+    # нужно заполнить params
+    return render_template("game.html", params=a[0])
+
+
 @app.route('/register', methods=['GET', 'POST'])
 def reqister():
     form = RegisterForm()
