@@ -6,7 +6,7 @@
     <a href="games" class="btn btn-secondary">Добавить новость</a>
 {% endif %}
 {% for item in games%}
-<div class="linkblock border rounded" onclick="location.href='/games';">
+<div class="linkblock border rounded" onclick="location.href='/games/{{ item.title }}';">
     <h2>{{item.title}}</h2>
     <div>
         {{item.content}}
