@@ -24,6 +24,23 @@ login_manager.init_app(app)
 # def not_found(error):
 #     return requests.get(f'https://http.cat/500').content
 
+@app.route("/games/<name>")
+def game(name):
+    db_sess = db_session.create_session()
+    game = db_sess.query(Games).filter(Games.title == name).one()
+    f = open('basket.txt', 'a+')
+    f.write('\n')
+    f.write(game.title)
+    return render_template("game.html", params=game)
+
+
+@app.route("/basket/<name>")
+def basket(name):
+    db_sess = db_session.create_session()
+    game = db_sess.query(Games).filter(Games.title == name).one()
+    f = open('basket.txt').read()
+    return render_template("basket.html", params=(game, f))
+
 
 @login_manager.user_loader
 def load_user(user_id):
