@@ -9,16 +9,60 @@ from forms.news import GameAddForm
 from forms.user import AdminForm
 from forms.user import RegisterForm, LoginForm
 from flask_ngrok import run_with_ngrok
-from urllib.parse import urlparse
+import config
+import logging
+import asyncio
+from datetime import datetime
+
+from aiogram import Bot, Dispatcher, executor, types
+from sqlighter import SQLighter
+
+# задаем уровень логов
+logging.basicConfig(level=logging.INFO)
+
+# инициализируем бота
+bot = Bot(token=config.API_TOKEN)
+dp = Dispatcher(bot)
+
+# инициализируем соединение с БД
+db = SQLighter('db.db')
 app = Flask(__name__)
 app.config['SECRET_KEY'] = 'yandexlyceum_secret_key'
 run_with_ngrok(app)
-
 
 login_manager = LoginManager()
 login_manager.init_app(app)
 
 
+# бот начало
+# Команда активации подписки
+@dp.message_handler(commands=['subscribe'])
+async def subscribe(message: types.Message):
+    if (not db.subscriber_exists(message.from_user.id)):
+        # если юзера нет в базе, добавляем его
+        db.add_subscriber(message.from_user.id)
+    else:
+        # если он уже есть, то просто обновляем ему статус подписки
+        db.update_subscription(message.from_user.id, True)
+
+    await message.answer(
+        "Вы успешно подписались на рассылку!\nЖдите, скоро выйдут новые обзоры и вы узнаете о них первыми =)")
+
+
+# Команда отписки
+@dp.message_handler(commands=['unsubscribe'])
+async def unsubscribe(message: types.Message):
+    if (not db.subscriber_exists(message.from_user.id)):
+        # если юзера нет в базе, добавляем его с неактивной подпиской (запоминаем)
+        db.add_subscriber(message.from_user.id, False)
+        await message.answer("Вы итак не подписаны.")
+    else:
+        # если он уже есть, то просто обновляем ему статус подписки
+        db.update_subscription(message.from_user.id, False)
+        await message.answer("Вы успешно отписаны от рассылки.")
+
+
+# бот конец(почти)
 @app.route('/download/<filename>')
 def download(filename):
     filepath = path.join(app.root_path, 'game_archives', filename)
@@ -49,7 +93,7 @@ for error in range(400, 511):
                 file.write(requests.get(f'https://http.cat/{error.code}').content)
             return render_template('error.html')
     except Exception as e:
-        print(f"Не удалось подключить к обработчику ошибку {error}")
+        print(error)
 
 
 @login_manager.user_loader
@@ -141,7 +185,7 @@ def logout():
     return redirect("/")
 
 
-@app.route('/game_add', methods=['GET', 'POST'])
+@app.route('/games', methods=['GET', 'POST'])
 @login_required
 def add_games():
     form = GameAddForm()
@@ -162,20 +206,24 @@ def add_games():
             current_user.games.append(game)
             db_sess.merge(current_user)
             db_sess.commit()
-            o = urlparse(request.base_url)
-            # TODO there уведомление от бота Telegram
-            game_link = f"http://{o.netloc}/games/{game.title}"
-            print(game_link)
 
+            # проверяем наличие новых игр и делаем рассылки
+            async def scheduled(wait_for):
+                subscriptions = db.get_subscriptions()
+                for s in subscriptions:
+                    await bot.send_photo(
+                        s[1],
+                        game.picture,
+                        caption=game.title + "\n"  + "\n" + game.genre + "\n\n" + game.content,
+                        disable_notification=True
+                    )
 
             photo = request.files['picture']
             archive = request.files['archive']
-            if form.picture.data.filename:
-                with open(f"static/img/{form.picture.data.filename}", 'wb') as file:
-                    file.write(photo.read())
-            if form.archive.data.filename:
-                with open(f"game_archives/{form.archive.data.filename}", 'wb') as file:
-                    file.write(archive.read())
+            with open(f"static/img/{form.picture.data.filename}", 'wb') as file:
+                file.write(photo.read())
+            with open(f"game_archives/{form.archive.data.filename}", 'wb') as file:
+                file.write(archive.read())
             return redirect('/')
         else:
             print("NO SUBMIT")
@@ -188,8 +236,8 @@ def edit_games(id):
     if request.method == "GET":
         db_sess = db_session.create_session()
         game = db_sess.query(Games).filter(Games.id == id,
-                                            Games.user == current_user
-                                            ).first()
+                                           Games.user == current_user
+                                           ).first()
         if game:
             form.title.data = game.title
             form.content.data = game.content
@@ -203,8 +251,8 @@ def edit_games(id):
     if form.validate_on_submit():
         db_sess = db_session.create_session()
         game = db_sess.query(Games).filter(Games.id == id,
-                                            Games.user == current_user
-                                            ).first()
+                                           Games.user == current_user
+                                           ).first()
         if game:
             game.title = form.title.data
             game.content = form.content.data
