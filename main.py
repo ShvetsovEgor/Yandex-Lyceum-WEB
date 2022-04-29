@@ -25,6 +25,7 @@ login_manager.init_app(app)
 
 
 @app.route('/download/<filename>')
+@login_required
 def download(filename):
     filepath = path.join(app.root_path, 'game_archives', filename)
     return send_file(filepath)
