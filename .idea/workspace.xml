@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="0f96fa4d-fbf4-4488-9e54-82ef81eb7996" name="Default Changelist" comment="probably works">
+    <list default="true" id="0f96fa4d-fbf4-4488-9e54-82ef81eb7996" name="Default Changelist" comment="all are woks">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/requirements.txt" beforeDir="false" afterPath="$PROJECT_DIR$/requirements.txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/config.py" beforeDir="false" afterPath="$PROJECT_DIR$/config.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -141,7 +141,14 @@
       <option name="project" value="LOCAL" />
       <updated>1651330604314</updated>
     </task>
-    <option name="localTasksCounter" value="6" />
+    <task id="LOCAL-00006" summary="all are woks">
+      <created>1651330914762</created>
+      <option name="number" value="00006" />
+      <option name="presentableId" value="LOCAL-00006" />
+      <option name="project" value="LOCAL" />
+      <updated>1651330914763</updated>
+    </task>
+    <option name="localTasksCounter" value="7" />
     <servers />
   </component>
   <component name="UnknownFeatures">
@@ -165,6 +172,7 @@
     <MESSAGE value="Result for heroku" />
     <MESSAGE value="with main()" />
     <MESSAGE value="probably works" />
-    <option name="LAST_COMMIT_MESSAGE" value="probably works" />
+    <MESSAGE value="all are woks" />
+    <option name="LAST_COMMIT_MESSAGE" value="all are woks" />
   </component>
 </project>

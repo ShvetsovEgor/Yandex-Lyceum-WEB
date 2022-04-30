@@ -4,4 +4,4 @@ POSTGRES = "postgresql://uzqmubvfssuina:222eec260bedccf6942975fffe06ef7d86c9e378
 DB_FILE = "/db/digitalmarket.db"  # если хотим оставить возможность переключиться обратно на sqlite
 SQLITE = f'sqlite://{DB_FILE}?check_same_thread=False'
 
-LOCAL_DB = SQLITE
+LOCAL_DB = POSTGRES
