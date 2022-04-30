@@ -22,7 +22,7 @@ def global_init():
     else:  # сработает локально
         from config import LOCAL_DB
         conn_str = LOCAL_DB
-
+    print(conn_str)
     engine = sa.create_engine(conn_str, echo=False)
 
     __factory = orm.sessionmaker(bind=engine)
