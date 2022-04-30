@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="0f96fa4d-fbf4-4488-9e54-82ef81eb7996" name="Default Changelist" comment="without bot">
+    <list default="true" id="0f96fa4d-fbf4-4488-9e54-82ef81eb7996" name="Default Changelist" comment="res">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/config.py" beforeDir="false" afterPath="$PROJECT_DIR$/config.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/main.py" beforeDir="false" afterPath="$PROJECT_DIR$/main.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -162,7 +162,14 @@
       <option name="project" value="LOCAL" />
       <updated>1651340458465</updated>
     </task>
-    <option name="localTasksCounter" value="9" />
+    <task id="LOCAL-00009" summary="res">
+      <created>1651345812595</created>
+      <option name="number" value="00009" />
+      <option name="presentableId" value="LOCAL-00009" />
+      <option name="project" value="LOCAL" />
+      <updated>1651345812595</updated>
+    </task>
+    <option name="localTasksCounter" value="10" />
     <servers />
   </component>
   <component name="UnknownFeatures">
@@ -189,6 +196,7 @@
     <MESSAGE value="all are woks" />
     <MESSAGE value="right postgres" />
     <MESSAGE value="without bot" />
-    <option name="LAST_COMMIT_MESSAGE" value="without bot" />
+    <MESSAGE value="res" />
+    <option name="LAST_COMMIT_MESSAGE" value="res" />
   </component>
 </project>

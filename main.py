@@ -280,6 +280,14 @@ def games_delete(id):
 
 def main():
     db_session.global_init()
+    db_sess = db_session.create_session()
+    for i in range(1, 5):
+        g = Games()
+        g.genre = f"genre{i}"
+        g.title = f"title{i}"
+        g.year = f"200{i}"
+        g.platform = f"platform{i}"
+
     app.run()
 
 
