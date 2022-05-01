@@ -280,6 +280,12 @@ def games_delete(id):
 
 def main():
     db_session.global_init()
+
+    app.run()
+
+
+if __name__ == '__main__':
+    db_session.global_init()
     db_sess = db_session.create_session()
     for i in range(1, 5):
         g = Games()
@@ -287,11 +293,7 @@ def main():
         g.title = f"title{i}"
         g.year = f"200{i}"
         g.platform = f"platform{i}"
-
-    app.run()
-
-
-if __name__ == '__main__':
-    db_session.global_init()
+        db_sess.add(g)
+        db_sess.commit()
     app.run(host='0.0.0.0', port=os.environ.get("PORT", 5000))
 
