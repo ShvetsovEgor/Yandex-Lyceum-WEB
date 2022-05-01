@@ -284,4 +284,5 @@ def main():
 
 
 if __name__ == '__main__':
-    main()
+    db_session.global_init("db/digitalmarket.db")
+    app.run(host='0.0.0.0', port=os.environ.get("PORT", 5000))
