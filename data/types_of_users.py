@@ -12,6 +12,4 @@ class Types(SqlAlchemyBase):
     name = sqlalchemy.Column(sqlalchemy.String, nullable=True)
 
     user = orm.relation('User')
-    # types_of_users = orm.relation("types_of_users",
-    #                           secondary="association",
-    #                           backref="users")
+

@@ -280,9 +280,8 @@ def games_delete(id):
 
 def main():
     db_session.global_init("db/digitalmarket.db")
-    app.run()
+    app.run(host='0.0.0.0', port=os.environ.get("PORT", 5000))
 
 
 if __name__ == '__main__':
-    db_session.global_init("db/digitalmarket.db")
-    app.run(host='0.0.0.0', port=os.environ.get("PORT", 5000))
+    main()
