@@ -5,7 +5,6 @@ import requests
 from flask import Flask, render_template, redirect, request, abort, send_file
 from flask_login import LoginManager, login_user, login_required, logout_user, current_user
 
-
 from bot import db
 from config import API_TOKEN as token
 from data import db_session
@@ -24,6 +23,7 @@ login_manager = LoginManager()
 login_manager.init_app(app)
 
 
+# обработчик загрузки файла
 @app.route('/download/<filename>')
 @login_required
 def download(filename):
@@ -31,11 +31,13 @@ def download(filename):
     return send_file(filepath)
 
 
+# обработчик страницы "О проекте"
 @app.route("/about_us")
 def about_us():
     return render_template('about_us.html')
 
 
+# обработчик страницы игры
 @app.route("/games/<name>", methods=['GET', 'POST'])
 def game(name):
     db_sess = db_session.create_session()
@@ -95,12 +97,14 @@ for error in range(400, 511):
         print(f"Не удалось подключить к обработчику ошибку {error}")
 
 
+# создание текущей сессии пользователя
 @login_manager.user_loader
 def load_user(user_id):
     db_sess = db_session.create_session()
     return db_sess.query(User).get(user_id)
 
 
+# обработчик главной страницы
 @app.route("/")
 def index():
     db_sess = db_session.create_session()
@@ -114,6 +118,7 @@ def index():
     return render_template("index.html", games=games, games_slider=games_slider)
 
 
+# обработчик страницы регистрации
 @app.route('/register', methods=['GET', 'POST'])
 def reqister():
     form = RegisterForm()
@@ -143,6 +148,7 @@ def reqister():
     return render_template('register.html', title='Регистрация', form=form)
 
 
+# обработчик страницы добавления администратора
 @app.route("/admin", methods=['GET', 'POST'])
 def admin():
     form = AdminForm()
@@ -164,6 +170,7 @@ def admin():
     return render_template('admin.html', title='Добавление админа', form=form)
 
 
+# обработчик страницы авторизации
 @app.route('/login', methods=['GET', 'POST'])
 def login():
     form = LoginForm()
@@ -179,6 +186,7 @@ def login():
     return render_template('login.html', title='Авторизация', form=form)
 
 
+# обработчик выхода из аккаунта
 @app.route('/logout')
 @login_required
 def logout():
@@ -186,6 +194,7 @@ def logout():
     return redirect("/")
 
 
+# обработчик страницы добавления игры
 @app.route('/game_add', methods=['GET', 'POST'])
 @login_required
 def add_games():
@@ -229,6 +238,7 @@ def add_games():
             print("NO SUBMIT")
 
 
+# обработчик страницы редактирования игры
 @app.route('/games/<int:id>', methods=['GET', 'POST'])
 @login_required
 def edit_games(id):
@@ -265,6 +275,7 @@ def edit_games(id):
                            )
 
 
+# обработчик удаления игры
 @app.route('/games_delete/<int:id>', methods=['GET', 'POST'])
 @login_required
 def games_delete(id):
@@ -278,6 +289,7 @@ def games_delete(id):
     return redirect('/')
 
 
+# подключение к БД и запуск приложения
 def main():
     db_session.global_init("db/digitalmarket.db")
     app.run(host='0.0.0.0', port=os.environ.get("PORT", 5000))
