@@ -1,0 +1,62 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div>
+    <img height=100% width=100% src="/static/img/{{params.picture}}" >
+</div>
+
+<h1>{{ params.title }}</h1>
+
+
+<h2>Жанр {{ params.genre }}</h2>
+
+
+<h2>Описание:<br> {{ params.content }}</h2>
+
+<h2>Год релиза: {{params.created_date}}</h2>
+
+<h2>Поддерживаемые платформы: {{params.platform}}</h2>
+
+<h2>Автор(ы): {{params.user.name}}</h2>
+
+
+<style>
+.button_1650989547198 {
+    display: inline-block !important;
+    text-decoration: none !important;
+    background-color: #eaeaea !important;
+    color: #006089 !important;
+    border: 6px solid #006089 !important;
+    border-radius: 100px !important;
+    font-size: 21px !important;
+    padding: 8px 18px !important;
+    transition: all 0.2s ease !important;
+}
+.button_1650989547198:hover{
+    text-decoration: none !important;
+    background-color: #006089 !important;
+    color: #ffeded !important;
+    border-color: #006089 !important;
+}
+</style>
+<a href="/download/{{params.archive}}" class="button_1650989547198" target="_blank">
+  Скачать
+</a>
+
+
+<!--Блоки комментариев игры-->
+<div class="alert alert-primary" role="alert">
+<form action="" method="post" enctype="multipart/form-data" >
+    {{ form.content.label }}<br>
+    {{ form.content(class="form-control")}}<br>
+    {{ form.submit(type="submit", class="btn btn-secondary") }}<br>
+</form>
+</div>
+
+{% for content, author in comments %}
+<div class="alert alert-primary" role="alert">
+    {{author}}<br>
+    {{content}}<br>
+</div>
+{% endfor %}
+{% endblock %}

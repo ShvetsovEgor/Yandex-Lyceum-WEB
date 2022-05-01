@@ -1,0 +1,43 @@
+{% extends "base.html" %}
+
+{% block content %}
+<h1>Добавление игры</h1>
+
+<form action="" method="post" enctype="multipart/form-data" >
+    {{ form.hidden_tag() }}
+    <p>
+        {{ form.title.label }}<br>
+        {{ form.title(class="form-control") }}<br>
+        {% for error in form.title.errors %}
+            <p class="alert alert-danger" role="alert">
+                {{ error }}
+            </p>
+        {% endfor %}
+    </p>
+    {{form.genre.label}}
+    {{form.genre(class="form-control")}}
+    {{form.platform.label}}
+    {{form.platform(class="form-control")}}
+
+    {{form.created_date.label}}
+    {{form.created_date(class="form-control")}}
+
+    {{form.picture.label}}
+    {{form.picture(class="form-control")}}
+    {{form.archive.label}}
+    {{form.archive(class="form-control")}}
+    <p>
+        {{ form.content.label }}<br>
+        {{ form.content(class="form-control") }}<br>
+        {% for error in form.content.errors %}
+            <p content="alert alert-danger" role="alert">
+                {{ error }}
+            </p>
+        {% endfor %}
+    </p>
+    <p>{{ form.submit(type="submit", class="btn btn-primary") }}</p>
+    {{message}}
+</form>
+
+
+{% endblock %}
