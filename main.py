@@ -4,7 +4,7 @@ from urllib.parse import urlparse
 import requests
 from flask import Flask, render_template, redirect, request, abort, send_file
 from flask_login import LoginManager, login_user, login_required, logout_user, current_user
-from flask_ngrok import run_with_ngrok
+
 
 from bot import db
 from config import API_TOKEN as token
@@ -19,7 +19,7 @@ from forms.user import RegisterForm, LoginForm
 
 app = Flask(__name__)
 app.config['SECRET_KEY'] = 'yandexlyceum_secret_key'
-run_with_ngrok(app)
+
 login_manager = LoginManager()
 login_manager.init_app(app)
 
